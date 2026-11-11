@@ -1,0 +1,7 @@
+{
+  "bounds": "data",
+  "rules": [
+    {"op": "le", "left": "MMIN", "right": "MMAX"},
+    {"op": "le", "left": "CHMIN", "right": "CHMAX"}
+  ]
+}
