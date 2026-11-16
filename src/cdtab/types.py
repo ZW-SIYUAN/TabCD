@@ -1,23 +1,24 @@
+"""Exact bounded integer, fixed-point, and sparse finite domains."""
+
 from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Protocol
+
 from cdtab.errors import ConstraintTypeError
 
+
 class FiniteType(Protocol):
+    @property
+    def scale(self) -> int: ...
+
+    def values(self) -> tuple[int, ...]: ...
 
     @property
-    def scale(self) -> int:
-        ...
+    def cardinality(self) -> int: ...
 
-    def values(self) -> tuple[int, ...]:
-        ...
+    def contains(self, value: int) -> bool: ...
 
-    @property
-    def cardinality(self) -> int:
-        ...
-
-    def contains(self, value: int) -> bool:
-        ...
 
 @dataclass(frozen=True)
 class BoundedInt:
@@ -27,9 +28,9 @@ class BoundedInt:
 
     def __post_init__(self) -> None:
         if self.minimum > self.maximum:
-            raise ConstraintTypeError('minimum exceeds maximum')
+            raise ConstraintTypeError("minimum exceeds maximum")
         if self.scale != 0:
-            raise ConstraintTypeError('BoundedInt scale must be zero')
+            raise ConstraintTypeError("BoundedInt scale must be zero")
 
     def values(self) -> tuple[int, ...]:
         return tuple(range(self.minimum, self.maximum + 1))
@@ -41,6 +42,7 @@ class BoundedInt:
     def contains(self, value: int) -> bool:
         return self.minimum <= int(value) <= self.maximum
 
+
 @dataclass(frozen=True)
 class FixedPoint:
     minimum_scaled: int
@@ -49,9 +51,9 @@ class FixedPoint:
 
     def __post_init__(self) -> None:
         if self.minimum_scaled > self.maximum_scaled:
-            raise ConstraintTypeError('minimum_scaled exceeds maximum_scaled')
+            raise ConstraintTypeError("minimum_scaled exceeds maximum_scaled")
         if self.scale < 0:
-            raise ConstraintTypeError('fixed-point scale must be non-negative')
+            raise ConstraintTypeError("fixed-point scale must be non-negative")
 
     def values(self) -> tuple[int, ...]:
         return tuple(range(self.minimum_scaled, self.maximum_scaled + 1))
@@ -63,6 +65,7 @@ class FixedPoint:
     def contains(self, value: int) -> bool:
         return self.minimum_scaled <= int(value) <= self.maximum_scaled
 
+
 @dataclass(frozen=True)
 class FiniteEnum:
     members: tuple[int, ...]
@@ -70,11 +73,11 @@ class FiniteEnum:
 
     def __post_init__(self) -> None:
         if self.scale < 0:
-            raise ConstraintTypeError('enum scale must be non-negative')
+            raise ConstraintTypeError("enum scale must be non-negative")
         if not self.members:
-            raise ConstraintTypeError('enum must contain at least one member')
+            raise ConstraintTypeError("enum must contain at least one member")
         if len(set(self.members)) != len(self.members):
-            raise ConstraintTypeError('enum members must be unique')
+            raise ConstraintTypeError("enum members must be unique")
 
     def values(self) -> tuple[int, ...]:
         return tuple(sorted(self.members))

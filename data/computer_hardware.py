@@ -1,14 +1,25 @@
 """Download UCI Computer Hardware (DOI: 10.24432/C5830D)."""
+
 import io
-from pathlib import Path
 import urllib.request
 import zipfile
+from pathlib import Path
 
 import pandas as pd
 
 URL = "https://archive.ics.uci.edu/static/public/29/computer+hardware.zip"
-COLUMNS = ["VendorName", "ModelName", "MYCT", "MMIN", "MMAX", "CACH",
-           "CHMIN", "CHMAX", "PRP", "ERP"]
+COLUMNS = [
+    "VendorName",
+    "ModelName",
+    "MYCT",
+    "MMIN",
+    "MMAX",
+    "CACH",
+    "CHMIN",
+    "CHMAX",
+    "PRP",
+    "ERP",
+]
 
 
 def prepare(directory: Path) -> pd.DataFrame:
