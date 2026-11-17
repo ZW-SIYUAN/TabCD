@@ -1,5 +1,7 @@
 # From Rules to Rows: Exact Constrained Decoding for LLM-Based Tabular Synthesis
 
+[Project website and interactive demo](https://zw-siyuan.github.io/TabCD/) · [Paper](https://zw-siyuan.github.io/TabCD/ICDE2027.pdf)
+
 `src/cdtab/` implements the paper's TabCD compiler, exact projections, token masks, and reuse. Use Python 3.12. Internet access downloads pinned distilgpt2 weights from [Hugging Face](https://huggingface.co/distilgpt2) and the Computer Hardware dataset from UCI.
 
 ```sh

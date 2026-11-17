@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 88" role="img" aria-labelledby="title desc">
+  <title id="title">TabCD</title>
+  <desc id="desc">A token mask retains 5 and blocks 0 and 9. The selected token completes the valid table row 20, 15, 5.</desc>
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle" font-size="11" stroke-width="1.5">
+    <g stroke="#b8bec8" fill="#fff"><rect x="3" y="4" width="21" height="21" rx="3"/><rect x="55" y="4" width="21" height="21" rx="3"/></g>
+    <g fill="#a1a8b2"><text x="13.5" y="18.5">0</text><text x="65.5" y="18.5">9</text></g>
+    <g stroke="#8c95a2"><path d="M5 23 22 6M57 23 74 6"/></g>
+    <rect x="29" y="4" width="21" height="21" rx="3" fill="#2563eb" stroke="#2563eb"/>
+    <text x="39.5" y="18.5" fill="#fff" font-weight="700">5</text>
+    <path d="M39.5 27V35H64V44m-3-3 3 3 3-3" fill="none" stroke="#2563eb" stroke-linejoin="round"/>
+    <rect x="4" y="48" width="72" height="24" rx="2.5" fill="#fff" stroke="#647084"/>
+    <path d="M28 48v24m24-24v24" stroke="#647084"/>
+    <path d="M52.5 48.7H73.5Q75.3 48.7 75.3 50.5V69.5Q75.3 71.3 73.5 71.3H52.5Z" fill="#eff6ff"/>
+    <g fill="#424a56"><text x="16" y="64">20</text><text x="40" y="64">15</text></g><text x="64" y="64" fill="#2563eb" font-weight="700">5</text>
+  </g>
+  <text x="94" y="52" fill="#20242c" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="600" letter-spacing="-1.5">Tab<tspan fill="#2563eb">CD</tspan></text>
+  <text x="96" y="71" fill="#717782" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing=".2">Rules to valid rows</text>
+</svg>

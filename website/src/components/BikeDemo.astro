@@ -1,0 +1,127 @@
+---
+import { feasibleValues, illustrativePayloads, permitsPayload } from "../lib/bike-demo.js";
+import coreSource from "../lib/bike-demo.js?raw";
+import interfaceSource from "../scripts/bike-demo.js?raw";
+
+const values = feasibleValues(20, 15, "casual");
+const payloads = illustrativePayloads(values, "");
+// A classic inline script keeps the illustrative demo usable in exported HTML.
+// The browser and Node tests use the same restored finite-domain core.
+const clientScript = `(() => {\n${coreSource.replace(/^export /gm, "")}\n${interfaceSource.replace(/^export /gm, "")}\ninitBikeDemo(document.getElementById("bike-demo"), { feasibleValues, illustrativePayloads, permitsPayload, canCommit });\n})();`;
+---
+
+<div id="bike-demo" class="bike-demo" aria-label="Interactive Bike count-identity example">
+  <div class="demo-settings">
+    <div class="panel-heading"><p>Set the partial row</p><button type="button" data-reset>Reset</button></div>
+    <p class="count-identity"><code>total = casual + registered</code></p>
+    <div class="demo-stages" role="group" aria-label="Field being decoded">
+      <button type="button" data-stage="casual" aria-pressed="true">1. Decode casual</button>
+      <button type="button" data-stage="registered" aria-pressed="false">2. Decode registered</button>
+    </div>
+
+    <label class="demo-slider-label" for="bike-total">Committed total <output data-total-output for="bike-total">20</output></label>
+    <input id="bike-total" type="range" min="0" max="60" step="1" value="20" />
+    <label class="demo-slider-label" for="bike-casual">Casual <output data-casual-output for="bike-casual">Not committed</output></label>
+    <input id="bike-casual" type="range" min="0" max="20" step="1" value="15" disabled />
+    <p class="demo-hint" data-casual-hint>Choose a token and commit casual to constrain registered.</p>
+
+    <div class="demo-live-row" aria-label="Current partial row">
+      <div><span>total</span><strong data-row-total>20</strong></div>
+      <div><span>casual</span><strong data-row-casual class="current-field">?</strong></div>
+      <div><span>registered</span><strong data-row-registered>?</strong></div>
+    </div>
+    <p class="demo-footnote">Illustrative integer domain: 0–60. This example checks the count identity in your browser; it does not run a language model.</p>
+  </div>
+
+  <div class="demo-decoding">
+    <p class="panel-title">See the feasible continuations</p>
+    <div class="demo-support"><p class="demo-label">Exact residual support</p><p data-support><i>V</i><sub data-support-field>casual</sub> = <span data-support-values>&#123; 0, …, 20 &#125;</span></p></div>
+    <p class="demo-explanation" data-support-explanation>Any casual count from 0 to 20 leaves a nonnegative registered count.</p>
+
+    <div class="prefix-heading"><label for="bike-prefix">Current value prefix</label><button type="button" data-clear>Clear</button></div>
+    <div class="demo-prefix-input"><span data-prefix-field>casual is</span><input id="bike-prefix" type="text" inputmode="numeric" maxlength="2" placeholder="Type or select a token" autocomplete="off" spellcheck="false" aria-describedby="bike-payload-help" /></div>
+    <p class="demo-hint" id="bike-payload-help">Select an allowed token to append its payload.</p>
+
+    <div class="demo-token-list" aria-label="Illustrative candidate token payloads">
+      {payloads.map((payload, index) => {
+        const allowed = permitsPayload(values, "", payload);
+        return <button type="button" class:list={["demo-token", !allowed && "masked"]} data-token-index={index} data-payload={payload} disabled={!allowed} aria-label={`Token ${payload}: ${allowed ? "has a legal completion" : "masked, no legal completion"}`}><span class="token-payload">{payload}</span><span class="token-state" aria-hidden="true">{allowed ? "✓" : "×"}</span></button>;
+      })}
+    </div>
+    <div class="demo-key"><span><i class="allowed-dot"></i>Allowed</span><span><i class="masked-dot"></i>Masked</span><span>Illustrative payloads</span></div>
+    <div class="demo-commit-row"><p data-status role="status" aria-live="polite">Choose a token to begin.</p><button type="button" data-commit disabled>Commit field <span aria-hidden="true">↵</span></button></div>
+  </div>
+</div>
+<noscript><p>Enable JavaScript for the interactive example. With total = 20 and casual = 15, the only legal registered count is 5.</p></noscript>
+<script is:inline set:html={clientScript}></script>
+
+<style>
+  .bike-demo { display: grid; grid-template-columns: .95fr 1.05fr; margin: 1.5rem 0 2.5rem; border: 1px solid #dce0e6; border-radius: 6px; background: #fff; overflow: hidden; font-size: 14px; line-height: 1.6; }
+  .bike-demo p { margin: 0; }
+  .demo-settings, .demo-decoding { padding: 24px; min-width: 0; }
+  .demo-settings { border-right: 1px solid #e3e6eb; }
+  .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .panel-heading p, .panel-title { font-weight: 600; font-size: 15px; color: #303845; }
+  .panel-heading button, .prefix-heading button { border: 0; padding: 3px 0; color: #6b7280; font-size: 12px; background: transparent; }
+  .panel-heading button:hover, .prefix-heading button:hover { color: #2563eb; }
+  .count-identity { padding-top: 14px; }
+  .count-identity code { font-size: 12px; background: transparent; padding: 0; color: #505967; font-weight: 400; }
+  .demo-stages { display: flex; gap: 4px; padding: 3px; background: #f3f4f6; border-radius: 4px; margin: 21px 0; }
+  .demo-stages button { flex: 1; padding: 8px 3px; border: 1px solid transparent; border-radius: 3px; background: transparent; color: #6b7280; font-size: 12px; line-height: 1.5; }
+  .demo-stages button[aria-pressed="true"] { background: #fff; border-color: #dbe2eb; color: #245ab5; font-weight: 600; }
+  .demo-slider-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #4b5563; font-size: 12px; }
+  .demo-slider-label output { color: #2563eb; font-variant-numeric: tabular-nums; font-weight: 500; }
+  input[type="range"] { width: 100%; margin: 7px 0 17px; height: 22px; accent-color: #2563eb; cursor: pointer; }
+  input[type="range"]:disabled { opacity: .35; cursor: default; }
+  .bike-demo .demo-hint { font-size: 11px; line-height: 1.7; color: #777f8b; }
+  .demo-live-row { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 24px; border: 1px solid #dce1e8; border-radius: 3px; overflow: hidden; }
+  .demo-live-row > div { display: flex; flex-direction: column; text-align: center; border-right: 1px solid #dce1e8; }
+  .demo-live-row > div:last-child { border-right: 0; }
+  .demo-live-row span { padding: 6px 3px; border-bottom: 1px solid #dce1e8; background: #f7f8fa; color: #68717f; font-size: 11px; }
+  .demo-live-row strong { padding: 13px 3px; font-family: Consolas, Menlo, monospace; font-size: 24px; font-weight: 400; color: #46515f; }
+  .demo-live-row strong.current-field { background: #eff6ff; color: #2563eb; }
+  .bike-demo .demo-footnote { margin-top: 17px; color: #7b818b; font-size: 10px; line-height: 1.8; }
+  .demo-support { margin-top: 23px; }
+  .demo-label { font-size: 11px; color: #747d89; }
+  .demo-support [data-support] { margin-top: 7px; color: #245ab5; font-family: Consolas, Menlo, monospace; font-size: 19px; line-height: 1.6; }
+  .demo-support sub { font-size: 11px; }
+  .bike-demo .demo-explanation { margin-top: 8px; min-height: 39px; color: #697382; font-size: 12px; line-height: 1.7; }
+  .prefix-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 23px; }
+  .prefix-heading label { font-size: 12px; color: #4b5563; }
+  .demo-prefix-input { display: flex; align-items: center; gap: 9px; border: 1px solid #cbd5e1; border-radius: 4px; margin: 7px 0 8px; min-height: 45px; padding: 0 11px; background: #fff; }
+  .demo-prefix-input > span { flex-shrink: 0; color: #6f7884; font-family: Consolas, Menlo, monospace; font-size: 12px; }
+  .demo-prefix-input input { width: 100%; min-width: 0; background: transparent; border: 0; box-shadow: none; padding: 9px 0; color: #1f2937; font-family: Consolas, Menlo, monospace; font-size: 17px; }
+  .demo-prefix-input input::placeholder { font-family: inherit; font-size: 10px; color: #9ca3af; }
+  .demo-prefix-input:focus-within { outline: 2px solid #b5cdfb; outline-offset: 2px; }
+  .demo-prefix-input input:focus { outline: none; box-shadow: none; }
+  .demo-token-list { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 16px; }
+  .demo-token { display: flex; flex-direction: column; align-items: center; gap: 7px; min-height: 62px; padding: 10px 3px; color: #245ab5; background: #eff6ff; border: 1px solid #b7ccef; border-radius: 4px; }
+  .demo-token:not(:disabled):hover { background: #dfeaff; border-color: #5e91e7; }
+  .demo-token.masked { color: #9ca3af; background: #f6f7f8; border-color: #e2e5e9; cursor: default; }
+  .token-payload { font-family: Consolas, Menlo, monospace; font-size: 19px; line-height: 1.1; }
+  .masked .token-payload { text-decoration: line-through; text-decoration-thickness: 1px; }
+  .token-state { font-size: 11px; line-height: 1; }
+  .demo-key { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 11px; color: #7b8490; font-size: 10px; }
+  .demo-key span { display: inline-flex; align-items: center; gap: 5px; }
+  .demo-key span:last-child { margin-left: auto; }
+  .demo-key i { width: 5px; height: 5px; display: inline-block; border-radius: 50%; }
+  .allowed-dot { background: #4d82d7; }
+  .masked-dot { background: #abb2bd; }
+  .demo-commit-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; border-top: 1px solid #e6e9ed; margin-top: 22px; padding-top: 17px; }
+  .demo-commit-row p { flex: 1; min-width: 125px; color: #627085; font-size: 11px; line-height: 1.8; }
+  .demo-commit-row button { margin-left: auto; padding: 8px 12px; border: 1px solid #2563eb; border-radius: 4px; color: #fff; background: #2563eb; font-size: 12px; white-space: nowrap; }
+  .demo-commit-row button:disabled { background: #f3f4f6; color: #9ca3af; border-color: #dfe3e8; cursor: default; }
+  .demo-commit-row button:not(:disabled):hover { background: #1d4ed8; }
+  .demo-commit-row button span { margin-left: 7px; }
+  .bike-demo.complete .demo-live-row strong { color: #245ab5; background: #eff6ff; }
+  .bike-demo.complete [data-status] { color: #245ab5; font-weight: 500; }
+  @media (max-width: 680px) {
+    .bike-demo { grid-template-columns: 1fr; }
+    .demo-settings { border-right: 0; border-bottom: 1px solid #e3e6eb; }
+    .demo-settings, .demo-decoding { padding: 22px; }
+    .demo-stages button { padding-block: 10px; }
+    .demo-support { margin-top: 18px; }
+    .bike-demo .demo-explanation { min-height: 0; }
+    .demo-prefix-input input { font-size: 18px; }
+  }
+</style>

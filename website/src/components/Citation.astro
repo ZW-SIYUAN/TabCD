@@ -1,0 +1,29 @@
+---
+import { readFileSync } from "node:fs";
+const citation = readFileSync("public/citation.bib", "utf8");
+---
+
+<div class="project-citation">
+  <button type="button" id="copy-bibtex" aria-controls="bibtex-text">Copy BibTeX</button>
+  <pre><code id="bibtex-text">{citation.trim()}</code></pre>
+  <span id="citation-status" role="status" aria-live="polite"></span>
+</div>
+
+<script is:inline>
+  document.getElementById("copy-bibtex").addEventListener("click", async () => {
+    const code = document.getElementById("bibtex-text");
+    const status = document.getElementById("citation-status");
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(code.textContent);
+      status.textContent = "BibTeX copied.";
+    } catch {
+      const range = document.createRange();
+      range.selectNodeContents(code);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      status.textContent = "Citation selected. Press Ctrl+C or ⌘C to copy.";
+    }
+  });
+</script>

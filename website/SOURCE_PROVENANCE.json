@@ -1,0 +1,110 @@
+{
+  "template": {
+    "repository": "https://github.com/RomanHauksson/academic-project-astro-template",
+    "commit": "0e90d4f36bad6ee0af330964bdf0002fe451283d",
+    "implementation": "Actual Astro/MDX template source, with paper-specific content and limited styling changes.",
+    "license": "CC BY-SA 4.0"
+  },
+  "paper": {
+    "authoritative_input": "User-supplied ICDE2027.pdf",
+    "pdf_sha256": "de1d6d9421ecf6986a3396db9c881f630b8e0822698a150a77c88822eb225403",
+    "pdf_pages": 14,
+    "authors": [
+      "Zhili Wang",
+      "Heitor Murilo Gomes",
+      "Xingquan Zhu",
+      "Yi He"
+    ],
+    "figures": {
+      "method.png": {
+        "page": 7,
+        "rect": [
+          49,
+          48,
+          564,
+          242
+        ],
+        "figure": "6",
+        "rendered_pixels": [
+          2060,
+          776
+        ],
+        "sha256": "c18a3ab6175151ab6f4d2752519bd997c188ab853c0f3362c98a84c8ffa36112"
+      },
+      "validity.png": {
+        "page": 10,
+        "rect": [
+          49,
+          51,
+          300,
+          151
+        ],
+        "figure": "8, upper panel",
+        "rendered_pixels": [
+          1004,
+          400
+        ],
+        "sha256": "1b4febe6469b20c70a5fdf550245b17e6c29121058aa0535410071cd963a9491"
+      },
+      "quality.png": {
+        "page": 10,
+        "rect": [
+          312,
+          214,
+          564,
+          312
+        ],
+        "figure": "9",
+        "rendered_pixels": [
+          1008,
+          392
+        ],
+        "sha256": "ca0c810d150b07474074a70d3c40f4babda10a09620606287a42397abe40ccd5"
+      },
+      "adaptability.png": {
+        "page": 12,
+        "rect": [
+          49,
+          220,
+          564,
+          341
+        ],
+        "figure": "11",
+        "rendered_pixels": [
+          2060,
+          484
+        ],
+        "sha256": "b30238c25d294f17a50afcc9a9f54c73ac9042e748e9661ece558346eff9f55c"
+      }
+    },
+    "notes": "Direct PDF renders; no regenerated experimental graphics or modified scientific values."
+  },
+  "removed_from_page": [
+    "marketing hero layout",
+    "colored feature panels",
+    "metric cards"
+  ],
+  "experimental_work": "None; user PDF read/copy/render only, original manuscript and experiment files unchanged.",
+  "interactive_demo": {
+    "status": "Restored at user request",
+    "placement": "After Method, before Results; #demo",
+    "core_source": "src/lib/bike-demo.js",
+    "core_sha256": "f7542113c682378dbe2d221d9f10f56d33e8a3f4c5eec5b4f49f64fc18679bc8",
+    "scope": "Illustrative Bike count identity over integers 0..60; no model or research runtime.",
+    "presentation": "White background and restrained blue accent, following the Astro template.",
+    "core_byte_identical_to_previous_version": true
+  },
+  "hosting": {
+    "provider": "GitHub Pages",
+    "repository": "https://github.com/ZW-SIYUAN/TabCD",
+    "source_directory": "website",
+    "workflow": ".github/workflows/pages.yml",
+    "url": "https://zw-siyuan.github.io/TabCD/"
+  },
+  "runtime_maintenance": {
+    "astro": "7.4.12",
+    "mdx": "8.1.6",
+    "react_integration": "7.1.9",
+    "reason": "Update template dependencies to security-patched versions; preserve the page layout, unified Markdown plugins, and original whitespace behavior."
+  }
+}

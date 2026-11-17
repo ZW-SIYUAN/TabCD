@@ -1,0 +1,74 @@
+{
+  "authoritative_input": "User-supplied ICDE2027.pdf",
+  "pdf_sha256": "de1d6d9421ecf6986a3396db9c881f630b8e0822698a150a77c88822eb225403",
+  "pdf_pages": 14,
+  "authors": [
+    "Zhili Wang",
+    "Heitor Murilo Gomes",
+    "Xingquan Zhu",
+    "Yi He"
+  ],
+  "figures": {
+    "method.png": {
+      "page": 7,
+      "rect": [
+        49,
+        48,
+        564,
+        242
+      ],
+      "figure": "6",
+      "rendered_pixels": [
+        2060,
+        776
+      ],
+      "sha256": "c18a3ab6175151ab6f4d2752519bd997c188ab853c0f3362c98a84c8ffa36112"
+    },
+    "validity.png": {
+      "page": 10,
+      "rect": [
+        49,
+        51,
+        300,
+        151
+      ],
+      "figure": "8, upper panel",
+      "rendered_pixels": [
+        1004,
+        400
+      ],
+      "sha256": "1b4febe6469b20c70a5fdf550245b17e6c29121058aa0535410071cd963a9491"
+    },
+    "quality.png": {
+      "page": 10,
+      "rect": [
+        312,
+        214,
+        564,
+        312
+      ],
+      "figure": "9",
+      "rendered_pixels": [
+        1008,
+        392
+      ],
+      "sha256": "ca0c810d150b07474074a70d3c40f4babda10a09620606287a42397abe40ccd5"
+    },
+    "adaptability.png": {
+      "page": 12,
+      "rect": [
+        49,
+        220,
+        564,
+        341
+      ],
+      "figure": "11",
+      "rendered_pixels": [
+        2060,
+        484
+      ],
+      "sha256": "b30238c25d294f17a50afcc9a9f54c73ac9042e748e9661ece558346eff9f55c"
+    }
+  },
+  "notes": "Direct PDF renders; no regenerated experimental graphics or modified scientific values."
+}
